@@ -1,16 +1,16 @@
 import { geolocationInfo } from '../types'
-import { getGeolocation } from './geolocation'
+import { getGeolocation, getReverseGeolocation } from './geolocation'
 import { getWeather, getForecastWeather } from './weather'
 
 export async function getFullCurrentInfo (city?: string): Promise<any> {
   try {
-    const publicIP: geolocationInfo = await getGeolocation()
-    const weather: object = await getWeather(city)
+    const weather = await getWeather(city)
+    const geolocationInfo: geolocationInfo = (city !== undefined && city !== null) ? await getReverseGeolocation(weather.coord.lat, weather.coord.lon) : await getGeolocation()
 
     return {
-      status: (publicIP.data !== undefined && weather !== undefined) ? 'success' : 'failed',
+      status: (geolocationInfo.data !== undefined && weather !== undefined) ? 'success' : 'failed',
       data: {
-        currentGeolocationInfo: publicIP.data,
+        currentGeolocationInfo: geolocationInfo.data,
         currentWeatherInfo: weather
       }
     }
@@ -21,15 +21,15 @@ export async function getFullCurrentInfo (city?: string): Promise<any> {
 
 export async function getFullForecastInfo (city?: string): Promise<any> {
   try {
-    const publicIP: geolocationInfo = await getGeolocation()
-
     const cityData = await getWeather(city)
-    const weather: object = await getForecastWeather(cityData.coord.lat, cityData.coord.lon)
+    const weather = await getForecastWeather(cityData.coord.lat, cityData.coord.lon)
+
+    const geolocationInfo: geolocationInfo = (city !== undefined && city !== null) ? await getReverseGeolocation(cityData.coord.lat, cityData.coord.lon) : await getGeolocation()
 
     return {
-      status: (publicIP.data !== undefined && weather !== undefined) ? 'success' : 'failed',
+      status: (geolocationInfo.data !== undefined && weather !== undefined) ? 'success' : 'failed',
       data: {
-        forecastGeolocationInfo: publicIP.data,
+        forecastGeolocationInfo: geolocationInfo.data,
         forecastWeatherInfo: weather
       }
     }
