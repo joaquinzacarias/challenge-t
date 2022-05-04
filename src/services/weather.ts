@@ -19,12 +19,10 @@ export async function getWeather (city?: string): Promise<any> {
 
       url += `lat=${lat}&lon=${lon}&lang=sp&units=metric&appid=${WEATHER_API_KEY}`
     }
-    console.debug(`API path: ${url}`)
 
     const response = await fc.get(url)
 
     if (response.status === 200) {
-      console.log(response.data)
       return response.data
     } else {
       throw new Error(`Status: ${response.status}, message: ${response.statusText}`)
@@ -40,12 +38,10 @@ export async function getForecastWeather (latCoord?: string, lonCoord?: string):
   if ((latCoord !== undefined && latCoord !== null) && (lonCoord !== undefined && lonCoord !== null)) {
     url = `${WEATHER_FORECAST_API}lat=${latCoord}&lon=${lonCoord}&exclude=minutely,hourly,alerts&lang=sp&units=metric&appid=${WEATHER_API_KEY}`
   }
-  console.log(url)
 
   const response = await fc.get(url)
 
   if (response.status === 200) {
-    console.log(response.data)
     return response.data
   } else {
     return 'No data'

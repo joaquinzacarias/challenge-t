@@ -18,7 +18,7 @@ app.get('/version', (req, res) => {
 
 const PORT = 3000
 const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.debug(`Server running on port ${PORT}`)
 })
 
 export { app, server }
