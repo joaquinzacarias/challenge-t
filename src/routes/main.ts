@@ -6,6 +6,7 @@ import forecastRoutes from './forecast'
 
 const app = express()
 
+// Routes path configuration
 const locationPath: string = '/location'
 const currentPath: string = '/current'
 const forecastPath: string = '/forecast'

@@ -1,5 +1,8 @@
 import axios from 'axios'
-
+/**
+ * Function that returns the access to methods
+ * @returns
+ */
 const fetchClient = () => {
   return {
     post: async (url: string, data: any, options = {}) => await axios.post(url, data, { ...options }),

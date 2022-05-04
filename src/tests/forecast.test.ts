@@ -13,7 +13,7 @@ test('Forecast Weather', async () => {
 test('Forecast Weather response', async () => {
   const response = await api.get('/v1/forecast')
 
-  // Verificación de tener ambas coordenadas
+  // Checking if response has regionName,daily and daily has 8 objects
   expect(response.body).toHaveProperty('forecastGeolocationInfo')
   expect(response.body.forecastGeolocationInfo).toHaveProperty('regionName')
   expect(response.body).toHaveProperty('forecastWeatherInfo')
@@ -31,7 +31,7 @@ test('Forecast Weather - Munro,AR', async () => {
 test('Forecast Weather response - Munro,AR', async () => {
   const response = await api.get('/v1/forecast/Munro,AR')
 
-  // Verificación de tener ambas coordenadas
+  // Checking if response has regionName,daily and daily has 8 objects
   expect(response.body).toHaveProperty('forecastGeolocationInfo')
   expect(response.body.forecastGeolocationInfo).toHaveProperty('regionName')
   expect(response.body).toHaveProperty('forecastGeolocationInfo')

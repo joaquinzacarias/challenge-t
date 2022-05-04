@@ -13,7 +13,7 @@ test('Current Weather', async () => {
 test('Current Weather response', async () => {
   const response = await api.get('/v1/current')
 
-  // Verificación de tener ambas coordenadas
+  // Checking if response has regionName and weather
   expect(response.body).toHaveProperty('currentGeolocationInfo')
   expect(response.body.currentGeolocationInfo).toHaveProperty('regionName')
   expect(response.body).toHaveProperty('currentWeatherInfo')
@@ -30,7 +30,7 @@ test('Current Weather - Munro,AR', async () => {
 test('Current Weather response - Munro,AR', async () => {
   const response = await api.get('/v1/current/Munro,AR')
 
-  // Verificación de tener ambas coordenadas
+  // Checking if response has regionName and weather
   expect(response.body).toHaveProperty('currentGeolocationInfo')
   expect(response.body.currentGeolocationInfo).toHaveProperty('regionName')
   expect(response.body).toHaveProperty('currentWeatherInfo')

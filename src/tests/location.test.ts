@@ -13,7 +13,7 @@ test('Geolocation', async () => {
 test('Geolocation response', async () => {
   const response = await api.get('/v1/location')
 
-  // Verificación de tener ambas coordenadas
+  // Checking if there are the two coords
   expect(response.body).toHaveProperty('lon')
   expect(response.body).toHaveProperty('lat')
 })
