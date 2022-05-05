@@ -1,4 +1,4 @@
-import { geolocationInfo } from '../types'
+import { currentWeatherResponse, forecastWeatherResponse, geolocationInfo } from '../types'
 import { getGeolocation, getReverseGeolocation } from './geolocation'
 import { getWeather, getForecastWeather } from './weather'
 
@@ -11,9 +11,9 @@ import { getWeather, getForecastWeather } from './weather'
 export async function getFullCurrentInfo (city?: string): Promise<any> {
   try {
     // Get current weather info
-    const weather = await getWeather(city)
+    const weather: currentWeatherResponse = await getWeather(city)
     // Get geolocation info base on the PublicIp o on the cities' coords given on the "getWeather" function
-    const geolocationInfo: geolocationInfo = (city !== undefined && city !== null) ? await getReverseGeolocation(weather.coord.lat, weather.coord.lon) : await getGeolocation()
+    const geolocationInfo: geolocationInfo = (city !== undefined && city !== null) ? await getReverseGeolocation(weather.coord.lat.toString(), weather.coord.lon.toString()) : await getGeolocation()
 
     return {
       status: (geolocationInfo.data !== undefined && weather !== undefined) ? 'success' : 'failed',
@@ -36,11 +36,11 @@ export async function getFullCurrentInfo (city?: string): Promise<any> {
 export async function getFullForecastInfo (city?: string): Promise<any> {
   try {
     // Get weather info to use the cities' coords on the "getForecastWeather" function
-    const cityData = await getWeather(city)
-    const weather = await getForecastWeather(cityData.coord.lat, cityData.coord.lon)
+    const cityData: currentWeatherResponse = await getWeather(city)
+    const weather: forecastWeatherResponse = await getForecastWeather(cityData.coord.lat.toString(), cityData.coord.lon.toString())
 
     // Get geolocation info base on the PublicIp o on the cities' coords given on the "getWeather" function
-    const geolocationInfo: geolocationInfo = (city !== undefined && city !== null) ? await getReverseGeolocation(cityData.coord.lat, cityData.coord.lon) : await getGeolocation()
+    const geolocationInfo: geolocationInfo = (city !== undefined && city !== null) ? await getReverseGeolocation(cityData.coord.lat.toString(), cityData.coord.lon.toString()) : await getGeolocation()
 
     return {
       status: (geolocationInfo.data !== undefined && weather !== undefined) ? 'success' : 'failed',

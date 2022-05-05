@@ -2,7 +2,7 @@ import fc from '../utils/fetch'
 
 import * as geolocationService from '../services/geolocation'
 
-import { geolocationInfo } from '../types'
+import { geolocationInfo, currentWeatherResponse, forecastWeatherResponse } from '../types'
 // Constants
 import { APIS } from '../utils/constants'
 import { CONFIG } from '../config'
@@ -34,7 +34,24 @@ export async function getWeather (city?: string): Promise<any> {
     const response = await fc.get(url)
 
     if (response.status === 200) {
-      return response.data
+      const { base, clouds, cod, coord, dt, id, main, name, sys, timezone, visibility, weather, wind } = response.data
+
+      const data: currentWeatherResponse = {
+        base,
+        clouds,
+        cod,
+        coord,
+        dt,
+        id,
+        main,
+        name,
+        sys,
+        timezone,
+        visibility,
+        weather,
+        wind
+      }
+      return data
     } else {
       throw new Error(`Status: ${response.status}, message: ${response.statusText}`)
     }
@@ -64,7 +81,18 @@ export async function getForecastWeather (latCoord?: string, lonCoord?: string):
   const response = await fc.get(url)
 
   if (response.status === 200) {
-    return response.data
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { current, daily, lat, lon, timezone, timezone_offset } = response.data
+
+    const data: forecastWeatherResponse = {
+      current,
+      daily,
+      lat,
+      lon,
+      timezone,
+      timezone_offset
+    }
+    return data
   } else {
     return 'No data'
   }
