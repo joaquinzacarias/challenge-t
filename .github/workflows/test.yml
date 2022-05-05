@@ -1,0 +1,25 @@
+name: Testing
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  building:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - name: Install dependencies
+        run: npm install
+      - name: Building
+        run: npm run tsc
+      - name: Testing
+        run: npm run test
